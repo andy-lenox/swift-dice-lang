@@ -1,0 +1,20 @@
+{
+  "" : {
+    "const-values" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master.swiftconstvalues",
+    "dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master.d",
+    "diagnostics" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master.dia",
+    "emit-module-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master-emit-module.dia",
+    "swift-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests-master.swiftdeps"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLangTests/DiceLangTests.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/DiceLangTests.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLangTests/TokenTests.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/TokenTests.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/TokenTests.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLangTests.build/Objects-normal/arm64/TokenTests.o"
+  }
+}

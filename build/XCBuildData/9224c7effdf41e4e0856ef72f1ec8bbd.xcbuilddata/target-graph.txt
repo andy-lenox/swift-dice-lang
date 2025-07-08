@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'DiceLangTests' in project 'DiceLang'
+➜ Explicit dependency on target 'DiceLang' in project 'DiceLang'
+Target 'DiceLang' in project 'DiceLang' (no dependencies)
