@@ -15,7 +15,7 @@ public class DiceRoller {
                 rolls: baseRolls,
                 total: baseRolls.reduce(0, +),
                 breakdown: DiceBreakdown(originalRolls: baseRolls),
-                type: .standard
+                type: DiceResultType.standard
             )
         }
         
@@ -68,7 +68,7 @@ public class DiceRoller {
             rolls: finalRolls,
             total: totalValue,
             breakdown: breakdown,
-            type: compound ? .compoundExploding : .exploding
+            type: compound ? DiceResultType.compoundExploding : DiceResultType.exploding
         )
     }
     
@@ -124,7 +124,7 @@ public class DiceRoller {
             rolls: keptRolls,
             total: total,
             breakdown: breakdown,
-            type: .keepDrop
+            type: DiceResultType.keepDrop
         )
     }
     
@@ -152,7 +152,7 @@ public class DiceRoller {
             rolls: rolls,
             total: successCount,
             breakdown: breakdown,
-            type: .pool
+            type: DiceResultType.pool
         )
     }
     

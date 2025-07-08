@@ -283,21 +283,23 @@ struct LexerTests {
         let lexer = Lexer(input: "4d6kh3+2*3")
         let tokens = lexer.tokenize()
         
-        #expect(tokens.count == 9) // 4, d, 6, kh3, +, 2, *, 3, eof
+        #expect(tokens.count == 10) // 4, d, 6, kh, 3, +, 2, *, 3, eof
         #expect(tokens[0].type == .number)
         #expect(tokens[0].value == "4")
         #expect(tokens[1].type == .dice)
         #expect(tokens[2].type == .number)
         #expect(tokens[2].value == "6")
-        #expect(tokens[3].type == .identifier) // "kh3" is parsed as identifier
-        #expect(tokens[3].value == "kh3")
-        #expect(tokens[4].type == .plus)
-        #expect(tokens[5].type == .number)
-        #expect(tokens[5].value == "2")
-        #expect(tokens[6].type == .multiply)
-        #expect(tokens[7].type == .number)
-        #expect(tokens[7].value == "3")
-        #expect(tokens[8].type == .eof)
+        #expect(tokens[3].type == .keepHighest) // "kh" is now properly separated
+        #expect(tokens[3].value == "kh")
+        #expect(tokens[4].type == .number) // "3" is now a separate token
+        #expect(tokens[4].value == "3")
+        #expect(tokens[5].type == .plus)
+        #expect(tokens[6].type == .number)
+        #expect(tokens[6].value == "2")
+        #expect(tokens[7].type == .multiply)
+        #expect(tokens[8].type == .number)
+        #expect(tokens[8].value == "3")
+        #expect(tokens[9].type == .eof)
     }
     
     @Test("Lexer handles dice pool expression")

@@ -163,14 +163,34 @@ public class Lexer {
         let startColumn = column
         var value = ""
         
-        while let char = current, char.isLetter || char.isNumber || char == "_" {
+        // First, collect only letters and underscores
+        while let char = current, char.isLetter || char == "_" {
             value += String(char)
             advance()
+        }
+        
+        // Check if this might be a keep/drop modifier followed by numbers
+        if isKeepDropModifier(value) && current?.isNumber == true {
+            // This is a keep/drop modifier followed by numbers
+            // We'll return just the modifier part and let the next tokenization handle the number
+            position = startPosition + value.count
+            column = startColumn + value.count
+        } else {
+            // Continue collecting numbers if this isn't a keep/drop modifier
+            while let char = current, char.isNumber {
+                value += String(char)
+                advance()
+            }
         }
         
         // Check for keywords
         let tokenType = keywordType(for: value)
         return Token(type: tokenType, value: value, position: startPosition, line: startLine, column: startColumn)
+    }
+    
+    private func isKeepDropModifier(_ value: String) -> Bool {
+        return value.lowercased() == "kh" || value.lowercased() == "kl" || 
+               value.lowercased() == "dh" || value.lowercased() == "dl"
     }
     
     private func isPartOfIdentifier() -> Bool {
