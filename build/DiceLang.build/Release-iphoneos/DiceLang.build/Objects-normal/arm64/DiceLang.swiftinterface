@@ -1,0 +1,463 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-module-flags: -target arm64-apple-ios18.4 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name DiceLang
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public protocol RandomNumberGenerator {
+  func roll(sides: Swift.Int) -> Swift.Int
+  func roll(sides: Swift.Int, count: Swift.Int) -> [Swift.Int]
+}
+public class SystemRandomNumberGenerator : DiceLang.RandomNumberGenerator {
+  public init()
+  public func roll(sides: Swift.Int) -> Swift.Int
+  public func roll(sides: Swift.Int, count: Swift.Int) -> [Swift.Int]
+  @objc deinit
+}
+public class FixedRandomNumberGenerator : DiceLang.RandomNumberGenerator {
+  public init(values: [Swift.Int])
+  public func roll(sides: Swift.Int) -> Swift.Int
+  public func roll(sides: Swift.Int, count: Swift.Int) -> [Swift.Int]
+  public func reset()
+  @objc deinit
+}
+public class SeededRandomNumberGenerator : DiceLang.RandomNumberGenerator {
+  public init(seed: Swift.UInt64)
+  public func roll(sides: Swift.Int) -> Swift.Int
+  public func roll(sides: Swift.Int, count: Swift.Int) -> [Swift.Int]
+  @objc deinit
+}
+extension DiceLang.RandomNumberGenerator {
+  public func rollD4() -> Swift.Int
+  public func rollD6() -> Swift.Int
+  public func rollD8() -> Swift.Int
+  public func rollD10() -> Swift.Int
+  public func rollD12() -> Swift.Int
+  public func rollD20() -> Swift.Int
+  public func rollD100() -> Swift.Int
+  public func rollPercentile() -> Swift.Int
+  public func rollFudge() -> Swift.Int
+}
+public struct DiceResult {
+  public let rolls: [Swift.Int]
+  public let total: Swift.Int
+  public let breakdown: DiceLang.DiceBreakdown
+  public let type: DiceLang.DiceResultType
+  public init(rolls: [Swift.Int], total: Swift.Int, breakdown: DiceLang.DiceBreakdown, type: DiceLang.DiceResultType)
+}
+public enum DiceResultType : Swift.String, Swift.CaseIterable {
+  case standard
+  case exploding
+  case compoundExploding
+  case keepDrop
+  case pool
+  case tagged
+  case table
+  case arithmetic
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [DiceLang.DiceResultType]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [DiceLang.DiceResultType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct DiceBreakdown {
+  public let originalRolls: [Swift.Int]
+  public let modifiedRolls: [Swift.Int]?
+  public let explodedRolls: [DiceLang.ExplodedRoll]?
+  public let keptRolls: [Swift.Int]?
+  public let droppedRolls: [Swift.Int]?
+  public let successCount: Swift.Int?
+  public let failureCount: Swift.Int?
+  public let modifierDescription: Swift.String?
+  public init(originalRolls: [Swift.Int], modifiedRolls: [Swift.Int]? = nil, explodedRolls: [DiceLang.ExplodedRoll]? = nil, keptRolls: [Swift.Int]? = nil, droppedRolls: [Swift.Int]? = nil, successCount: Swift.Int? = nil, failureCount: Swift.Int? = nil, modifierDescription: Swift.String? = nil)
+}
+public struct ExplodedRoll {
+  public let originalRoll: Swift.Int
+  public let additionalRolls: [Swift.Int]
+  public let totalValue: Swift.Int
+  public init(originalRoll: Swift.Int, additionalRolls: [Swift.Int])
+}
+public struct TaggedDiceResult {
+  public let tags: [Swift.String : DiceLang.DiceResult]
+  public let total: Swift.Int
+  public let outcome: DiceLang.TaggedOutcome?
+  public init(tags: [Swift.String : DiceLang.DiceResult], total: Swift.Int, outcome: DiceLang.TaggedOutcome? = nil)
+}
+public struct TaggedOutcome {
+  public let rule: Swift.String
+  public let winningTag: Swift.String
+  public let result: Swift.String
+  public init(rule: Swift.String, winningTag: Swift.String, result: Swift.String)
+}
+public struct TableResult {
+  public let tableName: Swift.String
+  public let roll: Swift.Int
+  public let result: Swift.String
+  public let nestedResults: [DiceLang.TableResult]?
+  public init(tableName: Swift.String, roll: Swift.Int, result: Swift.String, nestedResults: [DiceLang.TableResult]? = nil)
+}
+extension DiceLang.DiceResult : Swift.Equatable {
+  public static func == (lhs: DiceLang.DiceResult, rhs: DiceLang.DiceResult) -> Swift.Bool
+}
+extension DiceLang.DiceBreakdown : Swift.Equatable {
+  public static func == (lhs: DiceLang.DiceBreakdown, rhs: DiceLang.DiceBreakdown) -> Swift.Bool
+}
+extension DiceLang.ExplodedRoll : Swift.Equatable {
+  public static func == (lhs: DiceLang.ExplodedRoll, rhs: DiceLang.ExplodedRoll) -> Swift.Bool
+}
+extension DiceLang.TaggedDiceResult : Swift.Equatable {
+  public static func == (lhs: DiceLang.TaggedDiceResult, rhs: DiceLang.TaggedDiceResult) -> Swift.Bool
+}
+extension DiceLang.TaggedOutcome : Swift.Equatable {
+  public static func == (lhs: DiceLang.TaggedOutcome, rhs: DiceLang.TaggedOutcome) -> Swift.Bool
+}
+extension DiceLang.TableResult : Swift.Equatable {
+  public static func == (lhs: DiceLang.TableResult, rhs: DiceLang.TableResult) -> Swift.Bool
+}
+extension DiceLang.DiceResult : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension DiceLang.DiceResultType : Swift.Codable {
+}
+extension DiceLang.DiceBreakdown : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension DiceLang.ExplodedRoll : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension DiceLang.TaggedDiceResult : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension DiceLang.TaggedOutcome : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension DiceLang.TableResult : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public class Lexer {
+  public init(input: Swift.String)
+  public func tokenize() -> [DiceLang.Token]
+  @objc deinit
+}
+public class Parser {
+  public init(tokens: [DiceLang.Token])
+  public func parse() throws -> any DiceLang.DiceExpression
+  @objc deinit
+}
+extension DiceLang.Parser {
+  public static func parse(_ input: Swift.String) throws -> any DiceLang.DiceExpression
+  public static func parseAndEvaluate(_ input: Swift.String, context: DiceLang.EvaluationContext = EvaluationContext()) throws -> DiceLang.DiceResult
+}
+public enum TokenType : Swift.String, Swift.CaseIterable {
+  case number
+  case dice
+  case identifier
+  case plus
+  case minus
+  case multiply
+  case divide
+  case greaterThan
+  case greaterThanOrEqual
+  case lessThan
+  case lessThanOrEqual
+  case explode
+  case compoundExplode
+  case keepHighest
+  case keepLowest
+  case dropHighest
+  case dropLowest
+  case keep
+  case drop
+  case highest
+  case lowest
+  case leftParen
+  case rightParen
+  case leftBracket
+  case rightBracket
+  case comma
+  case colon
+  case arrow
+  case higherTag
+  case determines
+  case outcome
+  case at
+  case percent
+  case dash
+  case eof
+  case newline
+  case whitespace
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [DiceLang.TokenType]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [DiceLang.TokenType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct Token : Swift.Equatable {
+  public let type: DiceLang.TokenType
+  public let value: Swift.String
+  public let position: Swift.Int
+  public let line: Swift.Int
+  public let column: Swift.Int
+  public init(type: DiceLang.TokenType, value: Swift.String, position: Swift.Int, line: Swift.Int = 1, column: Swift.Int = 1)
+  public static func == (a: DiceLang.Token, b: DiceLang.Token) -> Swift.Bool
+}
+extension DiceLang.Token : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension DiceLang.Token : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public struct DiceRoll {
+  public let count: Swift.Int
+  public let sides: Swift.Int
+  public let modifier: DiceLang.DiceModifier?
+  public init(count: Swift.Int, sides: Swift.Int, modifier: DiceLang.DiceModifier? = nil)
+}
+public enum DiceModifier : Swift.Equatable {
+  case exploding
+  case compoundExploding
+  case keepHighest(Swift.Int)
+  case keepLowest(Swift.Int)
+  case dropHighest(Swift.Int)
+  case dropLowest(Swift.Int)
+  case threshold(DiceLang.DiceModifier.ComparisonOperator, Swift.Int)
+  public enum ComparisonOperator : Swift.String, Swift.CaseIterable {
+    case greaterThan
+    case greaterThanOrEqual
+    case lessThan
+    case lessThanOrEqual
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [DiceLang.DiceModifier.ComparisonOperator]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [DiceLang.DiceModifier.ComparisonOperator] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static func == (a: DiceLang.DiceModifier, b: DiceLang.DiceModifier) -> Swift.Bool
+}
+extension DiceLang.DiceRoll : Swift.Equatable {
+  public static func == (lhs: DiceLang.DiceRoll, rhs: DiceLang.DiceRoll) -> Swift.Bool
+}
+extension DiceLang.DiceRoll : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension DiceLang.DiceModifier : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+public class DiceRoller {
+  public init(randomNumberGenerator: any DiceLang.RandomNumberGenerator = SystemRandomNumberGenerator())
+  public func roll(_ diceRoll: DiceLang.DiceRoll) -> DiceLang.DiceResult
+  @objc deinit
+}
+extension DiceLang.DiceRoller {
+  public func rollD4(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD6(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD8(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD10(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD12(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD20(count: Swift.Int = 1) -> DiceLang.DiceResult
+  public func rollD100(count: Swift.Int = 1) -> DiceLang.DiceResult
+}
+public protocol DiceExpression {
+  func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  var description: Swift.String { get }
+}
+public protocol Visitable {
+  func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public protocol DiceExpressionVisitor {
+  associatedtype Result
+  func visit(_ expression: DiceLang.LiteralExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.DiceRollExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.BinaryExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.UnaryExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.GroupExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.ModifiedDiceExpression) throws -> Self.Result
+  func visit(_ expression: DiceLang.MultiModifiedDiceExpression) throws -> Self.Result
+}
+public struct EvaluationContext {
+  public let randomNumberGenerator: any DiceLang.RandomNumberGenerator
+  public let diceRoller: DiceLang.DiceRoller
+  public init(randomNumberGenerator: any DiceLang.RandomNumberGenerator = SystemRandomNumberGenerator())
+}
+public enum ParseError : Swift.Error, Foundation.LocalizedError {
+  case unexpectedToken(expected: Swift.String, found: DiceLang.Token)
+  case unexpectedEndOfInput(expected: Swift.String)
+  case invalidExpression(message: Swift.String)
+  case invalidNumber(value: Swift.String)
+  case invalidDiceNotation(message: Swift.String)
+  case missingOperand(operator: Swift.String)
+  case unclosedParentheses
+  case unexpectedCharacter(character: Swift.Character, position: Swift.Int)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct LiteralExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public let value: Swift.Int
+  public init(_ value: Swift.Int)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct DiceRollExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public let count: Swift.Int
+  public let sides: Swift.Int
+  public init(count: Swift.Int, sides: Swift.Int)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct BinaryExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public enum Operator : Swift.String, Swift.CaseIterable {
+    case add
+    case subtract
+    case multiply
+    case divide
+    public var precedence: Swift.Int {
+      get
+    }
+    public var isLeftAssociative: Swift.Bool {
+      get
+    }
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [DiceLang.BinaryExpression.Operator]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [DiceLang.BinaryExpression.Operator] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let left: any DiceLang.DiceExpression
+  public let `operator`: DiceLang.BinaryExpression.Operator
+  public let right: any DiceLang.DiceExpression
+  public init(left: any DiceLang.DiceExpression, operator: DiceLang.BinaryExpression.Operator, right: any DiceLang.DiceExpression)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct UnaryExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public enum Operator : Swift.String, Swift.CaseIterable {
+    case negate
+    case positive
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [DiceLang.UnaryExpression.Operator]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [DiceLang.UnaryExpression.Operator] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let `operator`: DiceLang.UnaryExpression.Operator
+  public let operand: any DiceLang.DiceExpression
+  public init(operator: DiceLang.UnaryExpression.Operator, operand: any DiceLang.DiceExpression)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct GroupExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public let expression: any DiceLang.DiceExpression
+  public init(_ expression: any DiceLang.DiceExpression)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct ModifiedDiceExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public let diceExpression: DiceLang.DiceRollExpression
+  public let modifier: DiceLang.DiceModifier
+  public init(diceExpression: DiceLang.DiceRollExpression, modifier: DiceLang.DiceModifier)
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+public struct MultiModifiedDiceExpression : DiceLang.DiceExpression, DiceLang.Visitable {
+  public let diceExpression: DiceLang.DiceRollExpression
+  public let modifiers: [DiceLang.DiceModifier]
+  public init(diceExpression: DiceLang.DiceRollExpression, modifiers: [DiceLang.DiceModifier])
+  public func evaluate(with context: DiceLang.EvaluationContext) throws -> DiceLang.DiceResult
+  public var description: Swift.String {
+    get
+  }
+  public func accept<V>(_ visitor: V) throws -> V.Result where V : DiceLang.DiceExpressionVisitor
+}
+extension DiceLang.DiceResult {
+  public enum ResultType {
+    case literal
+    case standard
+    case exploding
+    case compoundExploding
+    case keepDrop
+    case pool
+    case arithmetic
+    public static func == (a: DiceLang.DiceResult.ResultType, b: DiceLang.DiceResult.ResultType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+extension DiceLang.DiceResult {
+  public init(rolls: [Swift.Int], total: Swift.Int, breakdown: DiceLang.DiceBreakdown, type: DiceLang.DiceResult.ResultType)
+}
+extension DiceLang.DiceResultType : Swift.Equatable {}
+extension DiceLang.DiceResultType : Swift.Hashable {}
+extension DiceLang.DiceResultType : Swift.RawRepresentable {}
+extension DiceLang.TokenType : Swift.Equatable {}
+extension DiceLang.TokenType : Swift.Hashable {}
+extension DiceLang.TokenType : Swift.RawRepresentable {}
+extension DiceLang.DiceModifier.ComparisonOperator : Swift.Equatable {}
+extension DiceLang.DiceModifier.ComparisonOperator : Swift.Hashable {}
+extension DiceLang.DiceModifier.ComparisonOperator : Swift.RawRepresentable {}
+extension DiceLang.BinaryExpression.Operator : Swift.Equatable {}
+extension DiceLang.BinaryExpression.Operator : Swift.Hashable {}
+extension DiceLang.BinaryExpression.Operator : Swift.RawRepresentable {}
+extension DiceLang.UnaryExpression.Operator : Swift.Equatable {}
+extension DiceLang.UnaryExpression.Operator : Swift.Hashable {}
+extension DiceLang.UnaryExpression.Operator : Swift.RawRepresentable {}
+extension DiceLang.DiceResult.ResultType : Swift.Equatable {}
+extension DiceLang.DiceResult.ResultType : Swift.Hashable {}

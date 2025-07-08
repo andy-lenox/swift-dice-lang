@@ -1,0 +1,55 @@
+{
+  "" : {
+    "const-values" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master.swiftconstvalues",
+    "dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master.d",
+    "diagnostics" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master.dia",
+    "emit-module-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master-emit-module.dia",
+    "swift-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-master.swiftdeps"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/DiceExpression.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceExpression.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceExpression.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceExpression.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/DiceLang.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-e48cdce8a56aae8f5a51255401c7ed4f.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-e48cdce8a56aae8f5a51255401c7ed4f.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceLang-e48cdce8a56aae8f5a51255401c7ed4f.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/DiceResult.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceResult.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceResult.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceResult.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/DiceRoll.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoll.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoll.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoll.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/DiceRoller.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoller.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoller.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/DiceRoller.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/Lexer.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Lexer.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Lexer.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Lexer.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/Parser.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Parser.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Parser.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Parser.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/RandomNumberGenerator.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/RandomNumberGenerator.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/RandomNumberGenerator.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/RandomNumberGenerator.o"
+  },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/Token.swift" : {
+    "index-unit-output-path" : "/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Token.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Token.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Release-iphoneos/DiceLang.build/Objects-normal/arm64/Token.o"
+  }
+}

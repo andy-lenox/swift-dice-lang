@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/Release-iphoneos/DiceLang.framework/DiceLang'
+relocations:     []
+...
