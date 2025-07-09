@@ -22,6 +22,7 @@ public protocol DiceExpressionVisitor {
     func visit(_ expression: ModifiedDiceExpression) throws -> Result
     func visit(_ expression: MultiModifiedDiceExpression) throws -> Result
     func visit(_ expression: TaggedGroup) throws -> Result
+    func visit(_ expression: TableLookupExpression) throws -> Result
 }
 
 // MARK: - Evaluation Context
@@ -29,10 +30,12 @@ public protocol DiceExpressionVisitor {
 public struct EvaluationContext {
     public let randomNumberGenerator: RandomNumberGenerator
     public let diceRoller: DiceRoller
+    public let tableManager: TableManager?
     
-    public init(randomNumberGenerator: RandomNumberGenerator = SystemRandomNumberGenerator()) {
+    public init(randomNumberGenerator: RandomNumberGenerator = SystemRandomNumberGenerator(), tableManager: TableManager? = nil) {
         self.randomNumberGenerator = randomNumberGenerator
         self.diceRoller = DiceRoller(randomNumberGenerator: randomNumberGenerator)
+        self.tableManager = tableManager
     }
 }
 
@@ -328,6 +331,7 @@ extension DiceResult {
         case keepDrop
         case pool
         case arithmetic
+        case table
     }
 }
 
@@ -351,5 +355,7 @@ private func convertResultType(_ type: DiceResult.ResultType) -> DiceResultType 
         return .keepDrop
     case .pool:
         return .pool
+    case .table:
+        return .table
     }
 }

@@ -109,6 +109,11 @@ public class Parser {
             return GroupExpression(expr)
         }
         
+        // Handle table lookups (@table_name)
+        if match(.at) {
+            return try parseTableLookup()
+        }
+        
         // Handle numbers (potential dice or literals)
         if check(.number) {
             return try parseNumberOrDice()
@@ -123,7 +128,7 @@ public class Parser {
         if isAtEnd() {
             throw ParseError.unexpectedEndOfInput(expected: "expression")
         } else {
-            throw ParseError.unexpectedToken(expected: "number, dice, '[', or '('", found: peek())
+            throw ParseError.unexpectedToken(expected: "number, dice, '[', '@', or '('", found: peek())
         }
     }
     
@@ -427,6 +432,19 @@ public class Parser {
         } else {
             throw ParseError.unexpectedToken(expected: "higher_tag", found: peek())
         }
+    }
+    
+    // MARK: - Table Lookup Parsing
+    
+    private func parseTableLookup() throws -> DiceExpression {
+        // Parse table name after @
+        if !check(.identifier) {
+            throw ParseError.unexpectedToken(expected: "table name", found: peek())
+        }
+        
+        let tableName = advance().value
+        
+        return TableLookupExpression(tableName: tableName)
     }
     
     // MARK: - Token Utilities
