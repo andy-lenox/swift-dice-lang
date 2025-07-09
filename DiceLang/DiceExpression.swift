@@ -21,6 +21,7 @@ public protocol DiceExpressionVisitor {
     func visit(_ expression: GroupExpression) throws -> Result
     func visit(_ expression: ModifiedDiceExpression) throws -> Result
     func visit(_ expression: MultiModifiedDiceExpression) throws -> Result
+    func visit(_ expression: TaggedGroup) throws -> Result
 }
 
 // MARK: - Evaluation Context

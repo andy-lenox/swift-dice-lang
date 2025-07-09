@@ -85,6 +85,16 @@
     "swift-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/RandomNumberGenerator.swiftdeps",
     "swiftmodule" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/RandomNumberGenerator~partial.swiftmodule"
   },
+  "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/TaggedDice.swift" : {
+    "const-values" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.swiftconstvalues",
+    "dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.d",
+    "diagnostics" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.dia",
+    "index-unit-output-path" : "/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.o",
+    "llvm-bc" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.bc",
+    "object" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.o",
+    "swift-dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice.swiftdeps",
+    "swiftmodule" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/TaggedDice~partial.swiftmodule"
+  },
   "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/DiceLang/Token.swift" : {
     "const-values" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/Token.swiftconstvalues",
     "dependencies" : "/Users/andrew.lenox@gc.com/Development/DiceLanguage/DiceLang/build/DiceLang.build/Debug-iphoneos/DiceLang.build/Objects-normal/arm64/Token.d",

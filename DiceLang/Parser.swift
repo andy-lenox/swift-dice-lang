@@ -95,6 +95,11 @@ public class Parser {
     }
     
     private func parsePrimary() throws -> DiceExpression {
+        // Handle tagged dice groups
+        if match(.leftBracket) {
+            return try parseTaggedDiceGroup()
+        }
+        
         // Handle parentheses
         if match(.leftParen) {
             let expr = try parseExpression()
@@ -118,7 +123,7 @@ public class Parser {
         if isAtEnd() {
             throw ParseError.unexpectedEndOfInput(expected: "expression")
         } else {
-            throw ParseError.unexpectedToken(expected: "number, dice, or '('", found: peek())
+            throw ParseError.unexpectedToken(expected: "number, dice, '[', or '('", found: peek())
         }
     }
     
@@ -356,6 +361,71 @@ public class Parser {
             return ModifiedDiceExpression(diceExpression: diceExpression, modifier: modifiers[0])
         } else {
             return MultiModifiedDiceExpression(diceExpression: diceExpression, modifiers: modifiers)
+        }
+    }
+    
+    // MARK: - Tagged Dice Parsing
+    
+    private func parseTaggedDiceGroup() throws -> DiceExpression {
+        // Parse tagged dice: [tag1: dX, tag2: dY] => outcome_rule
+        var taggedDice: [TaggedDie] = []
+        
+        // Parse first tagged die
+        if !check(.identifier) {
+            throw ParseError.unexpectedToken(expected: "tag identifier", found: peek())
+        }
+        
+        let firstTag = advance().value
+        
+        if !match(.colon) {
+            throw ParseError.unexpectedToken(expected: ":", found: peek())
+        }
+        
+        let firstDiceExpr = try parseUnary()
+        taggedDice.append(TaggedDie(tag: firstTag, diceExpression: firstDiceExpr))
+        
+        // Parse additional tagged dice
+        while match(.comma) {
+            if !check(.identifier) {
+                throw ParseError.unexpectedToken(expected: "tag identifier", found: peek())
+            }
+            
+            let tag = advance().value
+            
+            if !match(.colon) {
+                throw ParseError.unexpectedToken(expected: ":", found: peek())
+            }
+            
+            let diceExpr = try parseUnary()
+            taggedDice.append(TaggedDie(tag: tag, diceExpression: diceExpr))
+        }
+        
+        if !match(.rightBracket) {
+            throw ParseError.unexpectedToken(expected: "]", found: peek())
+        }
+        
+        // Parse outcome rule
+        if !match(.arrow) {
+            throw ParseError.unexpectedToken(expected: "=>", found: peek())
+        }
+        
+        let outcomeRule = try parseOutcomeRule()
+        
+        return TaggedGroup(taggedDice: taggedDice, outcomeRule: outcomeRule)
+    }
+    
+    private func parseOutcomeRule() throws -> OutcomeRule {
+        // Currently only supports "higher_tag determines outcome"
+        if match(.higherTag) {
+            if !match(.determines) {
+                throw ParseError.unexpectedToken(expected: "determines", found: peek())
+            }
+            if !match(.outcome) {
+                throw ParseError.unexpectedToken(expected: "outcome", found: peek())
+            }
+            return HigherTagDeterminesOutcome()
+        } else {
+            throw ParseError.unexpectedToken(expected: "higher_tag", found: peek())
         }
     }
     
