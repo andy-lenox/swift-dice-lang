@@ -39,14 +39,14 @@ DiceLang implements a comprehensive domain-specific language (DSL) for dice expr
 Add DiceLang to your project using Xcode's Swift Package Manager:
 
 1. In Xcode, go to **File → Add Package Dependencies**
-2. Enter the repository URL: `https://github.com/yourusername/DiceLang`
+2. Enter the repository URL: `[https://github.com/yourusername/DiceLang](https://github.com/andy-lenox/swift-dice-lang/)`
 3. Select the version and add to your target
 
 Or add it to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/DiceLang", from: "1.0.0")
+    .package(url: "https://github.com/andy-lenox/swift-dice-lang", from: "1.0.0")
 ]
 ```
 
