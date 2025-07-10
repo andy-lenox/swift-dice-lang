@@ -50,6 +50,18 @@ public enum ParseError: Error, LocalizedError {
     case missingOperand(`operator`: String)
     case unclosedParentheses
     case unexpectedCharacter(character: Character, position: Int)
+    case tableNotFound(tableName: String)
+    case circularTableReference(tableName: String, referencePath: [String])
+    case recursionLimitExceeded(limit: Int)
+    case invalidTableDefinition(message: String)
+    case invalidKeepDropCount(count: Int, totalDice: Int)
+    case invalidDicePool(message: String)
+    case invalidThreshold(threshold: Int)
+    case evaluationError(message: String)
+    case typeError(expected: String, found: String)
+    case divisionByZero
+    case negativeResult(operation: String)
+    case outOfRange(value: Int, min: Int, max: Int)
     
     public var errorDescription: String? {
         switch self {
@@ -69,6 +81,30 @@ public enum ParseError: Error, LocalizedError {
             return "Unclosed parentheses in expression"
         case .unexpectedCharacter(let character, let position):
             return "Unexpected character '\(character)' at position \(position)"
+        case .tableNotFound(let tableName):
+            return "Table '\(tableName)' not found. Make sure the table is registered before use."
+        case .circularTableReference(let tableName, let referencePath):
+            return "Circular reference detected in table '\(tableName)'. Reference path: \(referencePath.joined(separator: " → "))"
+        case .recursionLimitExceeded(let limit):
+            return "Table recursion limit exceeded (\(limit)). Check for infinite loops in table references."
+        case .invalidTableDefinition(let message):
+            return "Invalid table definition: \(message)"
+        case .invalidKeepDropCount(let count, let totalDice):
+            return "Cannot keep/drop \(count) dice from only \(totalDice) dice"
+        case .invalidDicePool(let message):
+            return "Invalid dice pool: \(message)"
+        case .invalidThreshold(let threshold):
+            return "Invalid threshold value: \(threshold)"
+        case .evaluationError(let message):
+            return "Evaluation error: \(message)"
+        case .typeError(let expected, let found):
+            return "Type error: expected \(expected), found \(found)"
+        case .divisionByZero:
+            return "Division by zero is not allowed"
+        case .negativeResult(let operation):
+            return "Operation '\(operation)' resulted in a negative value, which is not allowed for dice operations"
+        case .outOfRange(let value, let min, let max):
+            return "Value \(value) is out of range. Expected value between \(min) and \(max)"
         }
     }
 }
@@ -168,7 +204,7 @@ public struct BinaryExpression: DiceExpression, Visitable {
             result = leftResult.total * rightResult.total
         case .divide:
             guard rightResult.total != 0 else {
-                throw ParseError.invalidExpression(message: "Division by zero")
+                throw ParseError.divisionByZero
             }
             result = leftResult.total / rightResult.total
         }
