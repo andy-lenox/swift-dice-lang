@@ -250,7 +250,12 @@ DiceLang is released under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
-Inspired by the rich tradition of tabletop RPGs and the need for robust dice expression parsing in digital gaming tools.
+- Inspired by the rich tradition of tabletop RPGs and the need for robust dice expression parsing in digital gaming tools
+- Built with assistance from [Claude](https://claude.ai) for architecture design, implementation, and testing
+
+## Development
+
+DiceLang was developed through a collaborative process using modern AI-assisted development practices. The framework architecture, comprehensive test suite, and documentation were created with the assistance of Claude AI to ensure high code quality and maintainability.
 
 ---
 

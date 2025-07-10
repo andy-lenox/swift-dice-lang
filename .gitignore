@@ -135,6 +135,9 @@ docs/build/
 # Development documentation (keep locally, not in repo)
 docs/
 
+# Claude Code project instructions (keep locally, not in repo)
+CLAUDE.md
+
 # Test coverage reports
 *.lcov
 *.gcov
