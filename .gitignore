@@ -132,6 +132,9 @@ Temporary Items
 # Documentation builds
 docs/build/
 
+# Development documentation (keep locally, not in repo)
+docs/
+
 # Test coverage reports
 *.lcov
 *.gcov
