@@ -133,7 +133,7 @@ Temporary Items
 docs/build/
 
 # Development documentation (keep locally, not in repo)
-docs/
+# docs/ - removed, grammar spec needs to be in repo
 
 # Claude Code project instructions (keep locally, not in repo)
 CLAUDE.md
