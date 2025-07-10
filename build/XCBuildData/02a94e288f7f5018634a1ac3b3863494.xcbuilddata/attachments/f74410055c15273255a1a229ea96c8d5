@@ -1,5 +1,0 @@
- extern const unsigned char DiceLangTestsVersionString[];
- extern const double DiceLangTestsVersionNumber;
-
- const unsigned char DiceLangTestsVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:DiceLangTests  PROJECT:DiceLang-1" "\n";
- const double DiceLangTestsVersionNumber __attribute__ ((used)) = (double)1.;
