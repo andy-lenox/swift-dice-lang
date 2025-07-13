@@ -68,7 +68,7 @@ public class Lexer {
                     advance()
                     advance()
                 } else {
-                    tokens.append(Token(type: .unknown, value: "=", position: position, line: line, column: column))
+                    tokens.append(Token(type: .assign, value: "=", position: position, line: line, column: column))
                     advance()
                 }
             case ">":

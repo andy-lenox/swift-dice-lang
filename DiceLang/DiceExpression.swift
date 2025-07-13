@@ -23,6 +23,8 @@ public protocol DiceExpressionVisitor {
     func visit(_ expression: MultiModifiedDiceExpression) throws -> Result
     func visit(_ expression: TaggedGroup) throws -> Result
     func visit(_ expression: TableLookupExpression) throws -> Result
+    func visit(_ expression: VariableDeclarationExpression) throws -> Result
+    func visit(_ expression: VariableReferenceExpression) throws -> Result
 }
 
 // MARK: - Evaluation Context
@@ -31,11 +33,13 @@ public struct EvaluationContext {
     public let randomNumberGenerator: RandomNumberGenerator
     public let diceRoller: DiceRoller
     public let tableManager: TableManager?
+    public let variableContext: VariableContext
     
-    public init(randomNumberGenerator: RandomNumberGenerator = SystemRandomNumberGenerator(), tableManager: TableManager? = nil) {
+    public init(randomNumberGenerator: RandomNumberGenerator = SystemRandomNumberGenerator(), tableManager: TableManager? = nil, variableContext: VariableContext = VariableContext()) {
         self.randomNumberGenerator = randomNumberGenerator
         self.diceRoller = DiceRoller(randomNumberGenerator: randomNumberGenerator)
         self.tableManager = tableManager
+        self.variableContext = variableContext
     }
 }
 
@@ -368,6 +372,7 @@ extension DiceResult {
         case pool
         case arithmetic
         case table
+        case variable
     }
 }
 
@@ -379,7 +384,7 @@ extension DiceResult {
 
 private func convertResultType(_ type: DiceResult.ResultType) -> DiceResultType {
     switch type {
-    case .literal, .arithmetic:
+    case .literal, .arithmetic, .variable:
         return .standard
     case .standard:
         return .standard
@@ -393,5 +398,75 @@ private func convertResultType(_ type: DiceResult.ResultType) -> DiceResultType 
         return .pool
     case .table:
         return .table
+    }
+}
+
+// MARK: - Variable Expressions
+
+public struct VariableDeclarationExpression: DiceExpression, Visitable {
+    public let name: String
+    public let expression: DiceExpression
+    
+    public init(name: String, expression: DiceExpression) {
+        self.name = name
+        self.expression = expression
+    }
+    
+    public func evaluate(with context: EvaluationContext) throws -> DiceResult {
+        // Store the variable in the context
+        try context.variableContext.declare(name, expression: expression)
+        
+        // Evaluate the expression to return its result
+        let result = try expression.evaluate(with: context)
+        
+        return DiceResult(
+            rolls: result.rolls,
+            total: result.total,
+            breakdown: DiceBreakdown(
+                originalRolls: result.rolls,
+                modifierDescription: "Variable '\(name)' = \(result.total)"
+            ),
+            type: .variable
+        )
+    }
+    
+    public var description: String {
+        return "\(name) = \(expression.description)"
+    }
+    
+    public func accept<V: DiceExpressionVisitor>(_ visitor: V) throws -> V.Result {
+        return try visitor.visit(self)
+    }
+}
+
+public struct VariableReferenceExpression: DiceExpression, Visitable {
+    public let name: String
+    
+    public init(name: String) {
+        self.name = name
+    }
+    
+    public func evaluate(with context: EvaluationContext) throws -> DiceResult {
+        // Retrieve and evaluate the variable expression
+        let expression = try context.variableContext.get(name)
+        let result = try expression.evaluate(with: context)
+        
+        return DiceResult(
+            rolls: result.rolls,
+            total: result.total,
+            breakdown: DiceBreakdown(
+                originalRolls: result.rolls,
+                modifierDescription: "Variable '\(name)' = \(result.total)"
+            ),
+            type: result.type
+        )
+    }
+    
+    public var description: String {
+        return name
+    }
+    
+    public func accept<V: DiceExpressionVisitor>(_ visitor: V) throws -> V.Result {
+        return try visitor.visit(self)
     }
 }

@@ -50,6 +50,9 @@ public enum TokenType: String, CaseIterable {
     case percent = "PERCENT"
     case dash = "DASH"
     
+    // Variable assignment
+    case assign = "ASSIGN"
+    
     // Special tokens
     case eof = "EOF"
     case newline = "NEWLINE"

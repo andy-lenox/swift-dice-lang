@@ -11,7 +11,7 @@ public class Parser {
     // MARK: - Public API
     
     public func parse() throws -> DiceExpression {
-        let expression = try parseExpression()
+        let expression = try parseStatement()
         
         if !isAtEnd() {
             let unexpectedToken = peek()
@@ -19,6 +19,28 @@ public class Parser {
         }
         
         return expression
+    }
+    
+    // MARK: - Statement Parsing
+    
+    private func parseStatement() throws -> DiceExpression {
+        // Check for variable declaration (identifier = expression)
+        if check(.identifier) {
+            let checkpoint = current
+            let identifier = advance()
+            
+            if match(.assign) {
+                // This is a variable declaration
+                let expression = try parseExpression()
+                return VariableDeclarationExpression(name: identifier.value, expression: expression)
+            } else {
+                // Not a variable declaration, backtrack and parse as expression
+                current = checkpoint
+                return try parseExpression()
+            }
+        }
+        
+        return try parseExpression()
     }
     
     // MARK: - Expression Parsing (Precedence Climbing)
@@ -124,11 +146,17 @@ public class Parser {
             return try parseDiceWithoutCount()
         }
         
+        // Handle variable references (identifier not followed by =)
+        if check(.identifier) {
+            let identifierToken = advance()
+            return VariableReferenceExpression(name: identifierToken.value)
+        }
+        
         // If we get here, we have an unexpected token
         if isAtEnd() {
             throw ParseError.unexpectedEndOfInput(expected: "expression")
         } else {
-            throw ParseError.unexpectedToken(expected: "number, dice, '[', '@', or '('", found: peek())
+            throw ParseError.unexpectedToken(expected: "number, dice, '[', '@', identifier, or '('", found: peek())
         }
     }
     
