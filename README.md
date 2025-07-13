@@ -20,6 +20,7 @@ DiceLang implements a comprehensive domain-specific language (DSL) for dice expr
 - **Keep/Drop modifiers**: `4d6kh3` (keep highest 3), `6d6dl2` (drop lowest 2)
 - **Dice pools**: `10d6>=5` (count successes), `8d10>7` (threshold pools)
 - **Comparison operators**: `>=`, `>`, `<=`, `<`, `==`, `!=`
+- **Named variables**: `damage = 2d6+4` with lazy evaluation and reuse
 
 ### Tagged Dice & Outcomes
 - **Tagged dice groups**: `[hope: d12, fear: d12]`
@@ -71,6 +72,17 @@ print("Successes: \(poolResult.breakdown.successCount ?? 0)")
 
 let keepHighest = try parser.evaluate("4d6kh3")
 print("Kept rolls: \(keepHighest.breakdown.keptRolls ?? [])")
+
+// Named variables with persistent context
+let context = EvaluationContext(variableContext: VariableContext())
+let damageDecl = try parser.parse("damage = 2d6+4")
+let damageResult = try damageDecl.evaluate(with: context)
+print("Damage roll: \(damageResult.total)") // e.g., "Damage roll: 12"
+
+// Reuse variables in complex expressions
+let totalDamage = try parser.parse("damage + damage")
+let totalResult = try totalDamage.evaluate(with: context)
+print("Total damage: \(totalResult.total)") // Each reference re-evaluates
 ```
 
 ## Advanced Usage
@@ -95,6 +107,36 @@ print("Found: \(treasure.finalResult)")
 
 // Table expressions
 let result = try parser.evaluate("@treasure")
+```
+
+### Named Variables for Complex Calculations
+
+```swift
+// Create persistent context for variables
+let context = EvaluationContext(variableContext: VariableContext())
+
+// Declare variables for character stats
+let strengthDecl = try parser.parse("strength = 16")
+_ = try strengthDecl.evaluate(with: context)
+
+let modifierDecl = try parser.parse("str_mod = (strength - 10) / 2")
+let modResult = try modifierDecl.evaluate(with: context)
+print("Strength modifier: \(modResult.total)") // "Strength modifier: 3"
+
+// Use variables in complex expressions
+let attackDecl = try parser.parse("attack_roll = d20 + str_mod")
+let attackResult = try attackDecl.evaluate(with: context)
+print("Attack roll: \(attackResult.total)") // e.g., "Attack roll: 18"
+
+// Variables with dice mechanics
+let advantageDecl = try parser.parse("advantage = 2d20kh1 + str_mod")
+_ = try advantageDecl.evaluate(with: context)
+
+// Lazy evaluation - each reference re-rolls
+let damageDecl = try parser.parse("damage = 2d6 + str_mod")
+let firstDamage = try damageDecl.evaluate(with: context)
+let secondDamage = try parser.parse("damage").evaluate(with: context)
+// firstDamage and secondDamage will likely be different due to re-rolling
 ```
 
 ### Tagged Dice for Narrative Games
@@ -142,6 +184,11 @@ DiceLang supports a rich expression grammar:
 
 // Arithmetic
 2d6+3, (1d8+2)*3, 1d20+5-2
+
+// Named variables
+damage = 2d6+4
+strength_mod = (strength - 10) / 2
+attack_roll = d20 + strength_mod
 
 // Exploding dice
 1d6!, 1d10!!, 3d6!
@@ -200,13 +247,13 @@ The framework is designed for:
 
 DiceLang is perfect for:
 
-- **Digital tabletop RPG apps** (D&D, Pathfinder, etc.)
-- **Narrative game systems** (Apocalypse World, Blades in the Dark)
-- **Board game companions**
-- **Game master tools**
-- **Discord/Slack bots**
-- **Educational dice probability tools**
-- **Game design prototyping**
+- **Digital tabletop RPG apps** (D&D, Pathfinder, etc.) - Complex character calculations with variables
+- **Narrative game systems** (Apocalypse World, Blades in the Dark) - Tagged dice outcomes
+- **Board game companions** - Quick dice rolling with custom mechanics
+- **Game master tools** - Random tables and complex encounter generation
+- **Discord/Slack bots** - Named variables for persistent character stats
+- **Educational dice probability tools** - Teaching statistics with real dice mechanics
+- **Game design prototyping** - Testing new dice mechanics and balance
 
 ## Documentation
 
